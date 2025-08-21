@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* optional niceties */
+html, body, #root { height: 100%; }
+* { scroll-behavior: smooth; }
+
+/* hide ugly scrollbars for carousels */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
