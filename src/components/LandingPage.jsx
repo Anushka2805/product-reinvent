@@ -84,13 +84,12 @@ function SmokeCanvas({ enabled = true }) {
   const lastTimeRef = useRef(performance.now());
   const [size, setSize] = useState({ w: 0, h: 0 });
 
-  // --- Configuration for refined, less dense smoke ---
-  const MAX_PARTICLES = 80;    // Reduced from 150
-  const SPAWN_PER_EVENT = 2;   // Reduced from 3
+  const MAX_PARTICLES = 80;
+  const SPAWN_PER_EVENT = 2;
   const SMOKE_COLORS = [
-    "rgba(200, 200, 200, 0.02)", // Reduced opacity
-    "rgba(150, 150, 150, 0.03)", // Reduced opacity
-    "rgba(120, 120, 120, 0.025)",// Reduced opacity
+    "rgba(200, 200, 200, 0.02)",
+    "rgba(150, 150, 150, 0.03)",
+    "rgba(120, 120, 120, 0.025)",
   ];
 
   useEffect(() => {
@@ -137,15 +136,15 @@ function SmokeCanvas({ enabled = true }) {
         lastSpawn = now;
       }
     }
-    
+
     const lenis = new Lenis();
-    const onScroll = (e) => {
+    const onScroll = () => {
       const x = window.innerWidth * (0.1 + Math.random() * 0.8);
       const y = window.innerHeight * 0.95;
       for (let i = 0; i < 4; i++) spawnSmoke(x, y);
     };
     lenis.on('scroll', onScroll);
-    
+
     window.addEventListener("mousemove", onMove, { passive: true });
 
     function frame(now) {
@@ -169,9 +168,9 @@ function SmokeCanvas({ enabled = true }) {
         const alpha = Math.max(0, p.alpha * (1 - t) * (1 - t));
 
         const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size);
-        const color = p.color.replace(/[\d.]+\)$/g, `${alpha})`);
+        const color = p.color.replace(/[\d.]+\)$/g, alpha + ")");
         grd.addColorStop(0, color);
-        grd.addColorStop(1, p.color.replace(/[\d.]+\)$/g, `0)`));
+        grd.addColorStop(1, p.color.replace(/[\d.]+\)$/g, "0)"));
 
         ctx.globalCompositeOperation = "lighter";
         ctx.fillStyle = grd;
@@ -184,6 +183,7 @@ function SmokeCanvas({ enabled = true }) {
           poolRef.current.push(p);
         }
       }
+
       animationRef.current = requestAnimationFrame(frame);
     }
     animationRef.current = requestAnimationFrame(frame);
@@ -213,7 +213,6 @@ const fadeUp = {
 
 /* -------------------------
   Main Landing Page Component
-  - Expects onAddToCart and onShowCheckout props from App.jsx
 ------------------------- */
 export default function LandingPage({ onAddToCart, onShowCheckout }) {
   const firstRow = [
